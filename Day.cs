@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Automation;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -17,38 +19,40 @@ namespace Curriculum {
     /// <summary>
     /// Interaction logic for Day.xaml
     /// </summary>
-    public partial class Day : Window {
+    public partial class Day : Label {
+        
         private static Day? nowOpened = null;
+        private DaysWindow window;
         private DateOnly date;
-        public Label Representation { get; } = new();
         public Day(DateOnly date) {
             this.date = date;
-
-            Representation.Content = date.Day;
-            Representation.MouseDown += this.ShowEvent;
+            Content = date.Day;
+            MouseDown += this.ShowEvent;
             int dayofweek = date.DayOfWeek == 0 ? 6 : (int)date.DayOfWeek - 1;
-            Grid.SetColumn(Representation, (int)dayofweek+1);
-            InitializeComponent();
+            Grid.SetColumn(this, (int)dayofweek + 1);
+
+            window = new(this);
         }
-        public Day(Day other) {
-            this.date = other.date;
-            Representation = other.Representation;
-            InitializeComponent();
+        public void WindowClose() {
+            if (nowOpened == null)
+                return;
+            if (nowOpened.IsVisible)
+                nowOpened.window.Close();
+            nowOpened.Background = Brushes.Transparent;
+            nowOpened.window = new(nowOpened);
+            nowOpened = null;
         }
         private void ShowEvent(object sender, MouseButtonEventArgs e) {
-            Representation.Background = Brushes.Aqua;
+            if (nowOpened == this)
+                return;
+            Background = Brushes.Aqua;
             if(nowOpened != null) {
-                nowOpened.Representation.Background = Brushes.Transparent;
-                nowOpened.Close();
-                nowOpened = new(nowOpened); // make him able to open agian
+                nowOpened.window.Close();
             }
-            this.Show();
+            window.Show();
             nowOpened = this;
         }
 
-        private void Window_Closed(object sender, EventArgs e) {
-            nowOpened = new(nowOpened);
-            nowOpened = null;
-        }
+        
     }
 }

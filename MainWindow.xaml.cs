@@ -27,7 +27,7 @@ namespace Curriculum {
         }
         private void MainGenerate() {
             main.RowDefinitions.Add(new());
-            string[] days = { "POniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota", "Niedziela" };
+            string[] days = { "Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota", "Niedziela" };
             for (int i = 0; i < days.Length; i++) {
                 var tmp = new Label() {
                     Content = days[i]
@@ -36,9 +36,10 @@ namespace Curriculum {
                 Grid.SetRow(tmp, 0);
                 main.Children.Add(tmp);
             }
+            int nr = 0;
             for (DateOnly i = mainDate; i.Month == mainDate.Month; i = i.AddDays(7)) {
                 main.RowDefinitions.Add(new());
-                Week tmp = new(i, main);
+                Week tmp = new(i, nr++, main) ;
                 weeks.Add(tmp);
             }
         }

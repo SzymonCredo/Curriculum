@@ -10,20 +10,19 @@ using System.Windows.Media;
 namespace Curriculum {
     internal class Week {
         List<Day> days = new();
-        public Week(DateOnly date, Grid? root = null) {
-            int nr = (int)(date.Day / 7);
-            DateOnly start_day = date.AddDays(-(int)date.DayOfWeek % 7+1);
+        public Week(DateOnly date, int nr, Grid? root = null) {
+            DateOnly start_date = date.AddDays(-(int)date.DayOfWeek % 7+1);
             for(int i = 0; i < 7;i++){
-                DateOnly core_day = start_day.AddDays(i);
+                DateOnly core_day = start_date.AddDays(i);
                 var day = new Day(core_day);
                 if(core_day.Month != date.Month)
-                    day.Representation.Foreground = Brushes.LightGray;
+                    day.Foreground = Brushes.LightGray;
                 
                 
-                Grid.SetRow(day.Representation, nr + 1);
+                Grid.SetRow(day, nr + 1);
                 days.Add(day);
                 if(root != null) {
-                    root.Children.Add(day.Representation);
+                    root.Children.Add(day);
                 }
             }
 
