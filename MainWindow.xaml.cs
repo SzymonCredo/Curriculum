@@ -15,9 +15,10 @@ using System.Windows.Shapes;
 
 namespace Curriculum {
     public partial class MainWindow : Window {
-        DateOnly mainDate = new(2015, 1, 1);
+        DateOnly mainDate = new(2023, 1, 1);
         List<Week> weeks = new List<Week>();
         public MainWindow() {
+            
             InitializeComponent();
 
 
@@ -26,8 +27,10 @@ namespace Curriculum {
 
         }
         private void MainGenerate() {
+            DaysWindow.DaysParent = mainContainer;
+            title.Content = mainDate.Year.ToString() + " " + Months[mainDate.Month - 1];
             main.RowDefinitions.Add(new());
-            string[] days = { "Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota", "Niedziela" };
+            string[] days = { "Poniedzi", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota", "Niedziela" };
             for (int i = 0; i < days.Length; i++) {
                 var tmp = new Label() {
                     Content = days[i]
@@ -36,12 +39,17 @@ namespace Curriculum {
                 Grid.SetRow(tmp, 0);
                 main.Children.Add(tmp);
             }
+
             int nr = 0;
-            for (DateOnly i = mainDate; i.Month == mainDate.Month; i = i.AddDays(7)) {
+            int MainDayOfWeek = mainDate.DayOfWeek == DayOfWeek.Sunday ? 6 : (int)mainDate.DayOfWeek -1;
+            DateOnly j = mainDate.AddDays(- MainDayOfWeek% 7 + 1);
+            do {
                 main.RowDefinitions.Add(new());
-                Week tmp = new(i, nr++, main) ;
+                Week tmp = new(j, nr++, main);
                 weeks.Add(tmp);
+                j = j.AddDays(7);
             }
+            while (j.Month == mainDate.Month);
         }
         private void MainClear() {
             main.Children.Clear();
@@ -53,13 +61,11 @@ namespace Curriculum {
         private void RightButton(object sender, RoutedEventArgs e) {
             MainClear();
             mainDate = mainDate.AddMonths(1);
-            title.Content = mainDate.Year.ToString()+" "+Months[mainDate.Month-1]; 
             MainGenerate();
         }
         private void LeftButton(object sender, RoutedEventArgs e) {
             MainClear();
             mainDate = mainDate.AddMonths(-1);
-            title.Content = mainDate.Year.ToString() + " " + Months[mainDate.Month - 1];
             MainGenerate();
         }
     }

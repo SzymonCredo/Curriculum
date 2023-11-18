@@ -5,32 +5,34 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Curriculum"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-	<StackPanel Background="Black">
-		<Grid Margin="5" Background="White">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="30"/>
-				<ColumnDefinition Width="*"/>
-				<ColumnDefinition Width="30"/>
-			</Grid.ColumnDefinitions>
+        Title="MainWindow" Height="900" Width="800">
+    <StackPanel Background="Black" x:Name="mainContainer">
+        <Grid Margin="5" Background="White">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="30"/>
+            </Grid.ColumnDefinitions>
             <Button Grid.Column="0" Click="LeftButton">&lt;</Button>
             <Label Grid.Column="1" HorizontalAlignment="Center" x:Name="title">2015 Styczeń</Label>
             <Button Grid.Column="2" Click="RightButton">&gt;</Button>
-		</Grid>
-		<Grid Background="White" Margin="10" x:Name="main">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-            </Grid.RowDefinitions>
-		</Grid>
-	</StackPanel>
+        </Grid>
+        <Viewbox>
+            <Grid Background="White" Margin="10" x:Name="main">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                </Grid.RowDefinitions>
+            </Grid>
+        </Viewbox>
+    </StackPanel>
     
 </Window>

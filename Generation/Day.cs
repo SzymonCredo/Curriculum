@@ -23,23 +23,23 @@ namespace Curriculum {
         
         private static Day? nowOpened = null;
         private DaysWindow window;
-        private DateOnly date;
+        public DateOnly date { get; }
+        private int dayofweek;
         public Day(DateOnly date) {
             this.date = date;
+            VerticalAlignment = VerticalAlignment.Center;
             Content = date.Day;
             MouseDown += this.ShowEvent;
-            int dayofweek = date.DayOfWeek == 0 ? 6 : (int)date.DayOfWeek - 1;
-            Grid.SetColumn(this, (int)dayofweek + 1);
+            dayofweek = date.DayOfWeek == DayOfWeek.Sunday ? 6 : (int)date.DayOfWeek - 1;
+            Grid.SetColumn(this, dayofweek + 1);
 
             window = new(this);
         }
         public void WindowClose() {
             if (nowOpened == null)
                 return;
-            if (nowOpened.IsVisible)
-                nowOpened.window.Close();
+            window.close();
             nowOpened.Background = Brushes.Transparent;
-            nowOpened.window = new(nowOpened);
             nowOpened = null;
         }
         private void ShowEvent(object sender, MouseButtonEventArgs e) {
@@ -47,9 +47,9 @@ namespace Curriculum {
                 return;
             Background = Brushes.Aqua;
             if(nowOpened != null) {
-                nowOpened.window.Close();
+                nowOpened.WindowClose();
             }
-            window.Show();
+            window.show();
             nowOpened = this;
         }
 

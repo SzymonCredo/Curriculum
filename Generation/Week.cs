@@ -13,9 +13,10 @@ namespace Curriculum {
         public Week(DateOnly date, int nr, Grid? root = null) {
             DateOnly start_date = date.AddDays(-(int)date.DayOfWeek % 7+1);
             for(int i = 0; i < 7;i++){
-                DateOnly core_day = start_date.AddDays(i);
+                DateOnly core_day = start_date;
+                core_day = core_day.AddDays(i);
                 var day = new Day(core_day);
-                if(core_day.Month != date.Month)
+                if((core_day.Month != date.Month && nr != 0) || (nr == 0 && core_day.Day > 7))
                     day.Foreground = Brushes.LightGray;
                 
                 
