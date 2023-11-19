@@ -11,9 +11,6 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Curriculum {
     /// <summary>
@@ -25,6 +22,7 @@ namespace Curriculum {
         private DaysWindow window;
         public DateOnly date { get; }
         private int dayofweek;
+        public List<CurriculumEvent> events { get; } = new() ;
         public Day(DateOnly date) {
             this.date = date;
             VerticalAlignment = VerticalAlignment.Center;

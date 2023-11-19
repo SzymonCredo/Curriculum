@@ -28,6 +28,18 @@ namespace Curriculum {
 
                 Title.Content = day + "." + month + "." + root.date.Year.ToString();
 
+                for(int i = 0; i< 24; i++) {
+                    var label = new Label() {
+                        Content = "Nothin",
+                        Margin = new(3),
+                        BorderBrush = Brushes.Black,
+                        BorderThickness = new(1),
+                        Background = Brushes.White,
+                        Height = 50
+                    };
+                    Grid.SetRow(label, i);
+                    EventContainer.Children.Add(label);
+                }
             }
         }
 
@@ -40,7 +52,6 @@ namespace Curriculum {
                 DaysParent.Children.Add(this);
         }
         public void close() {
-            
             this.Visibility = Visibility.Collapsed;
             if (DaysParent.Children.Contains(this))
                 DaysParent.Children.Remove(this);
