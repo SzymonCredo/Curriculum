@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Curriculum.Events;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,17 +16,18 @@ using System.Windows.Shapes;
 
 namespace Curriculum {
     public partial class MainWindow : Window {
+
         DateOnly mainDate = new(2023, 1, 1);
         List<Week> weeks = new List<Week>();
         public MainWindow() {
-            
+            var test = new CurriculumEvent("Test Event" , new(2023 , 1 , 20 , 1 , 0 , 0) , new(2023 , 2 , 20 , 2 , 0 , 0) , "Test desc");
+
             InitializeComponent();
 
 
             MainGenerate();
 
-
-        }
+              }
         private void MainGenerate() {
             DaysWindow.DaysParent = mainContainer;
             title.Content = mainDate.Year.ToString() + " " + Months[mainDate.Month - 1];

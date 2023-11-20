@@ -5,9 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Curriculum"
         mc:Ignorable="d"
-        Title="MainWindow" Height="900" Width="800">
-    <StackPanel Background="Black" x:Name="mainContainer">
-        <Grid Margin="5" Background="White">
+        Title="MainWindow" Height="830" Width="800">
+    <Grid Background="Black" >
+		<Grid.RowDefinitions>
+			<RowDefinition Height="40"/>
+			<RowDefinition/>
+			<RowDefinition/>
+		</Grid.RowDefinitions>
+        <Grid Margin="5" Background="White" Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="30"/>
                 <ColumnDefinition Width="*"/>
@@ -17,8 +22,8 @@
             <Label Grid.Column="1" HorizontalAlignment="Center" x:Name="title">2015 Styczeń</Label>
             <Button Grid.Column="2" Click="RightButton">&gt;</Button>
         </Grid>
-        <Viewbox>
-            <Grid Background="White" Margin="10" x:Name="main">
+        <Viewbox Height="350" Grid.Row="1">
+            <Grid Background="White" Margin="5" x:Name="main">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
@@ -33,6 +38,9 @@
                 </Grid.RowDefinitions>
             </Grid>
         </Viewbox>
-    </StackPanel>
+		<Grid x:Name="mainContainer" Grid.Row="2">
+			
+		</Grid>
+    </Grid>
     
 </Window>

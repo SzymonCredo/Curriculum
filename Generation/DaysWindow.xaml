@@ -7,8 +7,8 @@
         mc:Ignorable="d"
          Margin="10">
     <StackPanel Height="400" Width="800" Background="Gray">
-        <Grid Background="LightGray" Height="30">
-            <Grid.ColumnDefinitions>
+		<Grid Background="LightGray" Height="30"><!-- Title-->
+			<Grid.ColumnDefinitions>
                 <ColumnDefinition Width="9*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
@@ -18,11 +18,14 @@
             <Label x:Name="Title" HorizontalAlignment="Center"></Label>
             <Button Grid.Column="1" Click="Window_Closed">X</Button>
         </Grid>
-        <ScrollViewer Height="350" Margin="10">
-            <StackPanel  x:Name="EventContainer" >
-                
-            </StackPanel>
-        </ScrollViewer>
+        <ScrollViewer Height="350" Margin="10"> <!-- Content-->
+			<Grid  x:Name="EventContainer" >
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="50"/>
+				</Grid.ColumnDefinitions>
+
+			</Grid>
+		</ScrollViewer>
         
     </StackPanel>
 </Viewbox>

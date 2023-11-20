@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="Curriculum.Events.EventRepresentation"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Curriculum.Events"
+             mc:Ignorable="d" 
+             d:DesignHeight="50" d:DesignWidth="713">
+	<Grid Background="LightBlue" HorizontalAlignment="Stretch" Margin="3">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*"/>
+			<ColumnDefinition Width="*"/>
+			<ColumnDefinition Width="100"/>
+			<ColumnDefinition Width="30"/>
+		</Grid.ColumnDefinitions>
+		<Viewbox>
+			<Label x:Name="title" Grid.Column="0">TestTitle</Label>
+		</Viewbox>
+		<ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Hidden" BorderBrush="Black" BorderThickness="1" Margin="5">
+			<TextBlock  TextWrapping="Wrap" x:Name="desc" FontSize="10" Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras lobortis risus at orci pellentesque, at consequat nibh dignissim. Sed ultrices nulla ac enim convallis tempor. Suspendisse viverra molestie odio eget tristique. Donec ut nibh quis felis ullamcorper venenatis pharetra non quam. Aliquam ornare quis mi molestie euismod. Suspendisse ut leo purus. Pellentesque et nulla nec felis ornare aliquet et non elit. Etiam interdum lectus nibh. Suspendisse efficitur fermentum nisi non mattis. Mauris vel massa non ligula laoreet blandit."/>
+		</ScrollViewer>
+		<Viewbox Grid.Column="2">
+			<TextBlock Padding="5" TextWrapping="Wrap" x:Name="date" FontSize="20" Text="01.12.2023 - 02.12.2023"/>
+		</Viewbox>
+		<Button Click="Button_Click" Grid.Column="3" Background="LightPink">X</Button>
+	</Grid>
+</UserControl>
