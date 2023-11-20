@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Curriculum.Events;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -75,6 +76,11 @@ namespace Curriculum {
                 }
                 EventContainer.RowDefinitions.Clear();
             }
+        }
+
+        private void CreateNewEvent(object sender , RoutedEventArgs e) {
+            var window = new EventCreator();
+            window.ShowDialog();
         }
     }
 }

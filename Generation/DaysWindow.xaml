@@ -9,14 +9,16 @@
     <StackPanel Height="400" Width="800" Background="Gray">
 		<Grid Background="LightGray" Height="30"><!-- Title-->
 			<Grid.ColumnDefinitions>
-                <ColumnDefinition Width="9*"/>
-                <ColumnDefinition Width="1*"/>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="8*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
             </Grid.RowDefinitions>
-            <Label x:Name="Title" HorizontalAlignment="Center"></Label>
-            <Button Grid.Column="1" Click="Window_Closed">X</Button>
+			<Button Grid.Column="0" Click="CreateNewEvent">+</Button>
+			<Label Grid.Column="1" x:Name="Title" HorizontalAlignment="Center"></Label>
+			<Button Grid.Column="2" Click="Window_Closed">X</Button>
         </Grid>
         <ScrollViewer Height="350" Margin="10"> <!-- Content-->
 			<Grid  x:Name="EventContainer" >

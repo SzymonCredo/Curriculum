@@ -4,9 +4,33 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Curriculum.Events"
+		xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="EventCreator" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="Stwórz Wydarzenie" Height="450" Width="383">
+	<Viewbox>
+		<StackPanel Margin="10">
+			<Label>Nazwa:</Label>
+			<TextBox x:Name="name" MaxLength="30"/>
+			<Label>Opis:</Label>
+			<TextBox TextWrapping="WrapWithOverflow" MinLines="2" x:Name="desc"/>
+			<Label>Kiedy:</Label>
+			<StackPanel Orientation="Horizontal">
+				<Label>Od:</Label>
+				<toolkit:DateTimePicker  x:Name="startDate" VerticalAlignment="Center"/>
+
+			</StackPanel>
+			<StackPanel Orientation="Horizontal" Margin="0 10 0 0">
+				<Label>Do:</Label>
+				<toolkit:DateTimePicker  x:Name="endDate" VerticalAlignment="Center"/>
+			</StackPanel>
+			<StackPanel Orientation="Horizontal">
+				<Label>Kolor: </Label>
+				<TextBox Width="60" VerticalAlignment="Center" Text="#FFFFFF" PreviewTextInput="HexValidation"	 Margin="10 0 10 0">
+					
+				</TextBox>
+				<Label x:Name="hexView" Width="20" Height="20" BorderBrush="Black" BorderThickness="1"></Label>
+			</StackPanel>
+			<Button Click="Button_Click">Zatwierdz</Button>
+		</StackPanel>
+	</Viewbox>
 </Window>
