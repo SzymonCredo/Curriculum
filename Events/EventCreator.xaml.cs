@@ -30,17 +30,35 @@ private static bool IsTextAllowed(string text)
          */
         
         private void HexValidation(object sender , TextCompositionEventArgs e) {
-            Regex r = new("([^0-9]|[^a-F])+");
-            if(!r.IsMatch(e.Text))
+            var s = sender as TextBox;
+            Regex r = new("[A-f]|[0-9]");
+            if(s.Text.Length == 0 && e.Text != "#")
                 e.Handled = true;
-            e.Text.Replace('f' , 'F');
-            if(e.Text.Length == 6)
-                hexView.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(e.Text));
+            if(s.Text.Length != 0 && !r.IsMatch(e.Text))
+                e.Handled = true;
+            if (s.Text.Length >= 7)
+                e.Handled = true;
         }
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e) {
+            var s = sender as TextBox;
+            var hex = s.Text;
+            
+            if (s.Text.Length == 4)
+                hex += s.Text.Substring(1, 3);
 
+            if (hexView == null)
+                return;
+            if (hex.Length == 7) {
+                hexView.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(hex));
+                hexView.BorderBrush = Brushes.Black;
+            }
+            else
+                hexView.BorderBrush = Brushes.Red;
+        }
         private void Button_Click(object sender , RoutedEventArgs e) {
 
         }
 
+        
     }
 }

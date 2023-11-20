@@ -8,8 +8,8 @@
         mc:Ignorable="d"
         Title="Stwórz Wydarzenie" Height="450" Width="383">
 	<Viewbox>
-		<StackPanel Margin="10">
-			<Label>Nazwa:</Label>
+		<StackPanel Margin="5">
+			<Label Padding="0 0 0 5">Nazwa:</Label>
 			<TextBox x:Name="name" MaxLength="30"/>
 			<Label>Opis:</Label>
 			<TextBox TextWrapping="WrapWithOverflow" MinLines="2" x:Name="desc"/>
@@ -25,10 +25,13 @@
 			</StackPanel>
 			<StackPanel Orientation="Horizontal">
 				<Label>Kolor: </Label>
-				<TextBox Width="60" VerticalAlignment="Center" Text="#FFFFFF" PreviewTextInput="HexValidation"	 Margin="10 0 10 0">
-					
-				</TextBox>
-				<Label x:Name="hexView" Width="20" Height="20" BorderBrush="Black" BorderThickness="1"></Label>
+                <TextBox Width="60" 
+                         VerticalAlignment="Center" 
+                         Text="#FFFFFF" 
+                         TextChanged="TextBox_TextChanged"
+                         PreviewTextInput="HexValidation" 
+                         Margin="10 0 10 0"/>
+                <Label x:Name="hexView" Width="20" Height="20" BorderBrush="Black" BorderThickness="1"></Label>
 			</StackPanel>
 			<Button Click="Button_Click">Zatwierdz</Button>
 		</StackPanel>
