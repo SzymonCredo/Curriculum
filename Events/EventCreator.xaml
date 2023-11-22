@@ -10,9 +10,9 @@
 	<Viewbox>
 		<StackPanel Margin="5">
 			<Label Padding="0 0 0 5">Nazwa:</Label>
-			<TextBox x:Name="name" MaxLength="30"/>
+			<TextBox x:Name="name" MaxLength="30" TextChanged="StrValidate"/>
 			<Label>Opis:</Label>
-			<TextBox TextWrapping="WrapWithOverflow" MinLines="2" x:Name="desc"/>
+            <TextBox TextWrapping="WrapWithOverflow" MinLines="2" x:Name="desc" TextChanged="StrValidate"/>
 			<Label>Kiedy:</Label>
 			<StackPanel Orientation="Horizontal">
 				<Label>Od:</Label>
@@ -25,9 +25,10 @@
 			</StackPanel>
 			<StackPanel Orientation="Horizontal">
 				<Label>Kolor: </Label>
-                <TextBox Width="60" 
+                <TextBox x:Name="hexInput"
+						 Width="60" 
                          VerticalAlignment="Center" 
-                         Text="#FFFFFF" 
+                         Text="#FFFFFF"
                          TextChanged="TextBox_TextChanged"
                          PreviewTextInput="HexValidation" 
                          Margin="10 0 10 0"/>

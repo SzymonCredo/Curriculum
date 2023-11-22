@@ -1,18 +1,16 @@
 ﻿using Curriculum.Events;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Curriculum {
     public partial class MainWindow : Window {
@@ -20,14 +18,34 @@ namespace Curriculum {
         DateOnly mainDate = new(2023, 1, 1);
         List<Week> weeks = new List<Week>();
         public MainWindow() {
-            var test = new CurriculumEvent("Test Event" , new(2023 , 1 , 20 , 1 , 0 , 0) , new(2023 , 2 , 20 , 2 , 0 , 0) , "Test desc");
-
+            ImportEvents();
             InitializeComponent();
 
 
             MainGenerate();
 
-              }
+        }
+        public void ImportEvents() {
+            if (!File.Exists("events.json"))
+                File.Create("events.json");
+            string data = File.ReadAllText("events.json");
+
+            JsonSerializer serializer = new JsonSerializer();
+            HashSet<CurriculumEvent> events = JsonConvert.DeserializeObject<HashSet<CurriculumEvent>>(File.ReadAllText("events.json"));
+
+        }
+        public void ExportEvent() {
+            HashSet<CurriculumEvent> export = new();
+            foreach (var list in CurriculumEvent.events) {
+                foreach(CurriculumEvent item in list.Value)
+                    export.Add(item);
+            }
+
+            string json = JsonConvert.SerializeObject(export, Formatting.Indented);
+            using(StreamWriter writer = new("events.json", false)) {
+                writer.WriteLine(json);
+            }
+        }
         private void MainGenerate() {
             DaysWindow.DaysParent = mainContainer;
             title.Content = mainDate.Year.ToString() + " " + Months[mainDate.Month - 1];
@@ -69,6 +87,11 @@ namespace Curriculum {
             MainClear();
             mainDate = mainDate.AddMonths(-1);
             MainGenerate();
+        }
+
+        private void Window_Closed(object sender, EventArgs e) {
+            ExportEvent();
+            Close();
         }
     }
 }

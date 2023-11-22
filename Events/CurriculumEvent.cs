@@ -1,20 +1,20 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Curriculum.Events
 {
     public class CurriculumEvent {
-        public static Dictionary<DateOnly, List<CurriculumEvent>> events = new();
+        [JsonIgnore] public static Dictionary<DateOnly, List<CurriculumEvent>> events = new();
         public string Name { get; }
         public string Description { get; }
         public DateTime startTime { get; }
         public DateTime endTime { get; }
 
-        public EventRepresentation repres { get => new(this); } 
+        [JsonIgnore] public EventRepresentation repres { get => new(this); } 
 
         [JsonConstructor]
         public CurriculumEvent(string Name, DateTime startTime, DateTime endTime, string Description)

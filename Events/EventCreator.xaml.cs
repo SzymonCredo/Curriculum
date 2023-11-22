@@ -51,14 +51,52 @@ private static bool IsTextAllowed(string text)
             if (hex.Length == 7) {
                 hexView.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(hex));
                 hexView.BorderBrush = Brushes.Black;
+                s.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFABADB3"));
             }
             else
                 hexView.BorderBrush = Brushes.Red;
         }
+        public CurriculumEvent? resoult { get; private set; } = null;
         private void Button_Click(object sender , RoutedEventArgs e) {
+            bool valid = true;
+            if (name.Text == ""){
+                valid = false;
+                name.BorderBrush = Brushes.Red;
+            }
+            if (desc.Text == "") {
+                valid = false;
+                desc.BorderBrush = Brushes.Red;
+            }
+            if(startDate.Value == null || endDate.Value < startDate.Value) {
+                startDate.BorderBrush = Brushes.Red;
+                valid = false;
+            }
+            else
+                startDate.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFABADB3"));
+            if (endDate.Value == null || endDate.Value < startDate.Value) {
+                endDate.BorderBrush = Brushes.Red;
+                valid = false;
+            }
+            else
+                endDate.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFABADB3"));
+
+            if (hexInput.Text.Length < 7) {
+                hexInput.BorderBrush = Brushes.Red;
+                valid = false;
+            }
+            if (!valid)
+                return;
+            resoult = new(name.Text,  (DateTime)startDate.Value, (DateTime)endDate.Value, desc.Text);
+            Close();
 
         }
 
-        
+        private void StrValidate(object sender, TextChangedEventArgs e) {
+            var s = sender as TextBox;
+            if(s.Text == "")
+                s.BorderBrush = Brushes.Red;
+            else
+                s.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFABADB3"));
+        }
     }
 }
