@@ -15,26 +15,44 @@ using System.Windows.Input;
 namespace Curriculum {
     public partial class MainWindow : Window {
 
-        DateOnly mainDate = new(2023, 1, 1);
+        DateOnly mainDate = new DateOnly(DateTime.Now.Year, DateTime.Now.Month, 1);
         List<Week> weeks = new List<Week>();
         public MainWindow() {
             ImportEvents();
             InitializeComponent();
-
-
             MainGenerate();
-
+            Remainder();
         }
-        public void ImportEvents() {
+        // remainder
+        protected void Remainder() {
+            var tommorow = DateOnly.FromDateTime(DateTime.Now.AddDays(1));
+            if (!CurriculumEvent.events.Keys.Contains(tommorow))
+                return;
+            string title = "Masz jutro wpisane wydarzenie";
+            var tommorow_events = CurriculumEvent.events[tommorow];
+            string message;
+            if (tommorow_events.Count == 1)
+                message = "Jutro masz wpisane wydarzenie: " + tommorow_events[0].Name;
+            else {
+                message = "Jutro masz wpisane wydarzenia (" + tommorow_events.Count.ToString() + "):\n";
+                foreach(var e in tommorow_events) {
+                    message += "    "+e.Name+"\n";
+                }
+            }
+
+            MessageBox.Show(message, title, MessageBoxButton.OK, MessageBoxImage.Exclamation);
+        }
+        // saveing 
+        protected void ImportEvents() {
             if (!File.Exists("events.json"))
                 File.Create("events.json");
             string data = File.ReadAllText("events.json");
 
             JsonSerializer serializer = new JsonSerializer();
-            HashSet<CurriculumEvent> events = JsonConvert.DeserializeObject<HashSet<CurriculumEvent>>(File.ReadAllText("events.json"));
+            _ = JsonConvert.DeserializeObject<HashSet<CurriculumEvent>>(File.ReadAllText("events.json")); // constructor saves it
 
         }
-        public void ExportEvent() {
+        protected void ExportEvent() {
             HashSet<CurriculumEvent> export = new();
             foreach (var list in CurriculumEvent.events) {
                 foreach(CurriculumEvent item in list.Value)
@@ -46,6 +64,8 @@ namespace Curriculum {
                 writer.WriteLine(json);
             }
         }
+
+        // generation
         private void MainGenerate() {
             DaysWindow.DaysParent = mainContainer;
             title.Content = mainDate.Year.ToString() + " " + Months[mainDate.Month - 1];
@@ -76,8 +96,9 @@ namespace Curriculum {
             main.RowDefinitions.Clear();
         
         }
-        private static string[] Months = {"Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", "Lipiec", "Sierpień", "Wrzesień", "Październik", "LIstopad", "Grudzień"};
+        private static string[] Months = {"Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień"};
 
+        // UI events
         private void RightButton(object sender, RoutedEventArgs e) {
             MainClear();
             mainDate = mainDate.AddMonths(1);
