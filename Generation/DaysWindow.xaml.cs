@@ -1,6 +1,7 @@
 ﻿using Curriculum.Events;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -55,11 +56,20 @@ namespace Curriculum {
                     Grid.SetRow(label , i);
                     EventContainer.Children.Add(label);
                 }
-                EventContainer.ColumnDefinitions.Add(new());
                 // put all events in place
-                foreach(var e in root.events) {
+                var j = 1;
+                foreach(CurriculumEvent e in root.events) {
                     var tmp = e.repres;
-                    Grid.SetColumn(tmp , 1);
+                    var sth = DateOnly.FromDateTime(e.startTime) != root.date ? 0 : e.startTime.Hour;
+
+                    Grid.SetRow(tmp , sth);
+                    
+                    var ent = DateOnly.FromDateTime(e.endTime) != root.date ? 23 : e.endTime.Hour;
+                    if (ent == 0) ent++;
+                    Grid.SetRowSpan(tmp , ent-sth+1);
+
+                    EventContainer.ColumnDefinitions.Add(new());
+                    Grid.SetColumn(tmp , j++);
                     EventContainer.Children.Add(tmp);
                 }
             }

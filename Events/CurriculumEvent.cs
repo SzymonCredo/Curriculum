@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,18 +12,20 @@ namespace Curriculum.Events
         [JsonIgnore] public static Dictionary<DateOnly, List<CurriculumEvent>> events = new();
         public string Name { get; }
         public string Description { get; }
+        public string color { get; }
         public DateTime startTime { get; }
         public DateTime endTime { get; }
 
         [JsonIgnore] public EventRepresentation repres { get => new(this); } 
 
         [JsonConstructor]
-        public CurriculumEvent(string Name, DateTime startTime, DateTime endTime, string Description)
+        public CurriculumEvent(string Name, DateTime startTime, DateTime endTime, string Description, string color)
         {
             this.Name = Name;
             this.startTime = startTime;
             this.endTime = endTime;
             this.Description = Description;
+            this.color = color;
 
             var key = new DateOnly(startTime.Year , startTime.Month , startTime.Day);
             List<CurriculumEvent> evlist; // nie korzystam z niego, jest wykorzystywane tylko by użyć "trygetvalue"

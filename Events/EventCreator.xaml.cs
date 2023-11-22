@@ -79,14 +79,15 @@ private static bool IsTextAllowed(string text)
             }
             else
                 endDate.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFABADB3"));
-
-            if (hexInput.Text.Length < 7) {
+            var hex = hexInput.Text;
+            if (hex.Length == 4) hex += hex.Substring(1);
+            if (hex.Length < 7) {
                 hexInput.BorderBrush = Brushes.Red;
                 valid = false;
             }
             if (!valid)
                 return;
-            resoult = new(name.Text,  (DateTime)startDate.Value, (DateTime)endDate.Value, desc.Text);
+            resoult = new(name.Text,  (DateTime)startDate.Value, (DateTime)endDate.Value, desc.Text, hex);
             Close();
 
         }

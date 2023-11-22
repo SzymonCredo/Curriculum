@@ -24,7 +24,9 @@ namespace Curriculum.Events {
             InitializeComponent();
             title.Content = root.Name;
             desc.Text = root.Description;
+            date.Text = root.startTime.ToShortTimeString() +" "+ root.startTime.ToShortDateString() + "-" + root.endTime.ToShortTimeString() +" "+ root.endTime.ToShortDateString();
 
+            Main.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(root.color));
         }
 
         private void Button_Click(object sender , RoutedEventArgs e) {
