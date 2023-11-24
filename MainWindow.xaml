@@ -4,14 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Curriculum"
+        xmlns:gen="clr-namescpace:Curriculum.Generation"
         mc:Ignorable="d"
         Title="MainWindow" Height="830" Width="800" Closed="Window_Closed">
-    <Grid Background="Black" >
-		<Grid.RowDefinitions>
-			<RowDefinition Height="40"/>
-			<RowDefinition/>
-			<RowDefinition/>
-		</Grid.RowDefinitions>
+    <Grid Background="Black" x:Name="main">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
         <Grid Margin="5" Background="White" Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="30"/>
@@ -22,23 +23,11 @@
             <Label Grid.Column="1" HorizontalAlignment="Center" x:Name="title">2015 Styczeń</Label>
             <Button Grid.Column="2" Click="RightButton">&gt;</Button>
         </Grid>
-        <Viewbox Height="350" Grid.Row="1">
-            <Grid Background="White" Margin="5" x:Name="main">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                </Grid.RowDefinitions>
-            </Grid>
+        
+        <Viewbox x:Name="CalendarContainer" Grid.Row="1">
+            
         </Viewbox>
-		<Grid x:Name="mainContainer" Grid.Row="2">
+        <Grid x:Name="mainContainer" Grid.Row="2">
 			
 		</Grid>
     </Grid>

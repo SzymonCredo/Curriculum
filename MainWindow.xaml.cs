@@ -1,4 +1,5 @@
 ﻿using Curriculum.Events;
+using Curriculum.Generation;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -15,12 +16,17 @@ using System.Windows.Input;
 namespace Curriculum {
     public partial class MainWindow : Window {
 
-        DateOnly mainDate = new DateOnly(DateTime.Now.Year, DateTime.Now.Month, 1);
-        List<Week> weeks = new List<Week>();
+        public DateOnly mainDate = new DateOnly(DateTime.Now.Year, DateTime.Now.Month, 1);
+
+        private Month? month;
+        private Week? week;
+
+
         public MainWindow() {
             ImportEvents();
             InitializeComponent();
-            MainGenerate();
+            GenerateMain();
+            DaysWindow.DaysParent = mainContainer;
             Remainder();
         }
         // remainder
@@ -66,50 +72,20 @@ namespace Curriculum {
         }
 
         // generation
-        private void MainGenerate() {
-            DaysWindow.DaysParent = mainContainer;
-            title.Content = mainDate.Year.ToString() + " " + Months[mainDate.Month - 1];
-            main.RowDefinitions.Add(new());
-            string[] days = { "Poniedzi", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota", "Niedziela" };
-            for (int i = 0; i < days.Length; i++) {
-                var tmp = new Label() {
-                    Content = days[i]
-                };
-                Grid.SetColumn(tmp, i + 1);
-                Grid.SetRow(tmp, 0);
-                main.Children.Add(tmp);
-            }
-
-            int nr = 0;
-            int MainDayOfWeek = mainDate.DayOfWeek == DayOfWeek.Sunday ? 6 : (int)mainDate.DayOfWeek -1;
-            DateOnly j = mainDate.AddDays(- MainDayOfWeek% 7 + 1);
-            do {
-                main.RowDefinitions.Add(new());
-                Week tmp = new(j, nr++, main);
-                weeks.Add(tmp);
-                j = j.AddDays(7);
-            }
-            while (j.Month == mainDate.Month);
+        private void GenerateMain() {
+            title.Content = mainDate.ToShortDateString();
+            month = new(mainDate);
+            CalendarContainer.Child = month;
         }
-        private void MainClear() {
-            main.Children.Clear();
-            main.RowDefinitions.Clear();
-        
-        }
-        private static string[] Months = {"Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień"};
-
-        // UI events
+        // button events
         private void RightButton(object sender, RoutedEventArgs e) {
-            MainClear();
             mainDate = mainDate.AddMonths(1);
-            MainGenerate();
+            GenerateMain();
         }
         private void LeftButton(object sender, RoutedEventArgs e) {
-            MainClear();
             mainDate = mainDate.AddMonths(-1);
-            MainGenerate();
+            GenerateMain();
         }
-
         private void Window_Closed(object sender, EventArgs e) {
             ExportEvent();
             Close();

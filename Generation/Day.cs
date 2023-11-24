@@ -26,7 +26,8 @@ namespace Curriculum
         private DaysWindow window;
         public DateOnly date { get; }
         private int dayofweek;
-        public List<CurriculumEvent> events { get {
+        public List<CurriculumEvent> events { 
+            get {
                 List<CurriculumEvent> evlist;
                 if(CurriculumEvent.events.TryGetValue(date , out evlist)) {
                     return evlist;
@@ -44,13 +45,8 @@ namespace Curriculum
 
             dayofweek = date.DayOfWeek == DayOfWeek.Sunday ? 6 : (int)date.DayOfWeek - 1;
             Grid.SetColumn(this, dayofweek + 1);
-
-
-
             // create window
             window = new(this);
-
-            
         }
         public void WindowClose() {
             if (nowOpened == null)
