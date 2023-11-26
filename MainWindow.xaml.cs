@@ -25,6 +25,7 @@ namespace Curriculum {
         public MainWindow() {
             ImportEvents();
             InitializeComponent();
+            month = new(mainDate);
             GenerateMain();
             DaysWindow.DaysParent = mainContainer;
             Remainder();
@@ -72,23 +73,61 @@ namespace Curriculum {
         }
 
         // generation
-        private void GenerateMain() {
+        private void GenerateMain(bool isMonthMode = true) { 
+            if(isMonthMode) {
+                mainDate = new(mainDate.Year, mainDate.Month, 1);
+                month = new(mainDate);
+                CalendarContainer.Child = month;
+            }
+            else{
+                while (mainDate.DayOfWeek != DayOfWeek.Monday) {
+                    mainDate = mainDate.AddDays(-1);
+                }
+                week = new(mainDate);
+                CalendarContainer.Child = week;
+            }
             title.Content = mainDate.ToShortDateString();
-            month = new(mainDate);
-            CalendarContainer.Child = month;
         }
+        
         // button events
         private void RightButton(object sender, RoutedEventArgs e) {
-            mainDate = mainDate.AddMonths(1);
-            GenerateMain();
+            if(month != null)
+                mainDate = mainDate.AddMonths(1);
+            else
+                mainDate = mainDate.AddDays(7);
+            GenerateMain(month != null);
         }
         private void LeftButton(object sender, RoutedEventArgs e) {
-            mainDate = mainDate.AddMonths(-1);
-            GenerateMain();
+            if (month != null)
+                mainDate = mainDate.AddMonths(-1);
+            else
+                mainDate = mainDate.AddDays(-7);
+            GenerateMain(month != null);
         }
         private void Window_Closed(object sender, EventArgs e) {
             ExportEvent();
             Close();
         }
+
+        private void ComboBox_Selected(object sender, RoutedEventArgs e) {
+            var s = sender as ComboBox;
+            if (s == null || (s.SelectedItem as ComboBoxItem) == null || ((s.SelectedItem as ComboBoxItem).Content as TextBlock) == null)
+                return;
+            var value = ((s.SelectedItem as ComboBoxItem).Content as TextBlock).Text;
+            if (value == "Week View") {
+                week = new(mainDate);
+                Grid.SetRowSpan(CalendarContainer, 2);
+                month = null;
+                GenerateMain(false);
+            }
+            else if (value == "Month View") {
+                month = new(mainDate);
+                Grid.SetRowSpan(CalendarContainer, 1);
+                week = null;
+
+                GenerateMain(true);
+            }
+
+        }
     }
-}
+ }

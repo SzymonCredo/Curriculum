@@ -15,10 +15,10 @@ using System.Windows.Shapes;
 
 namespace Curriculum.Generation {
     /// <summary>
-    /// Interaction logic for WeekRepresentation.xaml
+    /// Interaction logic for Week.xaml
     /// </summary>
-    public partial class WeekRepresentation : UserControl {
-        public WeekRepresentation() {
+    public partial class Week : UserControl {
+        public Week(DateOnly date) {
             InitializeComponent();
         }
     }
